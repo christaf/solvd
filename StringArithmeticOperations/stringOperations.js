@@ -11,7 +11,14 @@ class StringOperations {
         } else if (str2.length > str1.length) {
             return false
         } else {
-            return (parseInt(str1[0]) - parseInt(str2[0]) >= 0)
+            for (let i = 0; i < str1.length; i++) {
+                const digit1 = parseInt(str1[i]);
+                const digit2 = parseInt(str2[i]);
+                if (digit1 !== digit2) {
+                    return digit1 >= digit2;
+                }
+            }
+            return true; // if both numbers are equal
         }
     }
 
