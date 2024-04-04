@@ -113,6 +113,10 @@ class StringOperations {
      */
     static divide(dividend, divisor) {
 
+        if (divisor === '0') {
+            throw new Error('Division by zero');
+        }
+
         let result = '';
         let tempDividend = '';
 
@@ -144,7 +148,12 @@ String.prototype.minus = function (str) {
     return StringOperations.minus(this.toString(), str)
 }
 String.prototype.divide = function (str) {
-    return StringOperations.divide(this.toString(), str)
+    try {
+        return StringOperations.divide(this.toString(), str);
+    } catch (error) {
+        console.error("Error:", error.message);
+        return "Error: Division by zero";
+    }
 }
 String.prototype.multiply = function (str) {
     return StringOperations.multiply(this.toString(), str)
