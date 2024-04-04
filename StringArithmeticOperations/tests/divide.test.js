@@ -19,5 +19,8 @@ describe('divide module', () => {
         expect(StringOperations.divide("621108", "729")).toBe("852");
     });
 
+    test('divides 444444444444444444444444444444444000 / 2 to equal 222222222222222222222222222222222000', () => {
+        expect(StringOperations.divide("444444444444444444444444444444444000", "2")).toBe("222222222222222222222222222222222000");
+    });
 
 });
