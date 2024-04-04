@@ -6,20 +6,19 @@ class StringOperations {
      * @returns {boolean} - True if the number in str1 is greater than or equal to the number in str2, false otherwise.
      */
     static compare(str1, str2) {
-        if (str1.length > str2.length) {
-            return true
-        } else if (str2.length > str1.length) {
-            return false
-        } else {
-            for (let i = 0; i < str1.length; i++) {
-                const digit1 = parseInt(str1[i]);
-                const digit2 = parseInt(str2[i]);
-                if (digit1 !== digit2) {
-                    return digit1 >= digit2;
-                }
+        const maxLength = Math.max(str1.length, str2.length);
+        const paddedStr1 = str1.padStart(maxLength, '0');
+        const paddedStr2 = str2.padStart(maxLength, '0');
+
+        for (let i = 0; i < maxLength; i++) {
+            const digit1 = parseInt(paddedStr1[i]);
+            const digit2 = parseInt(paddedStr2[i]);
+
+            if (digit1 !== digit2) {
+                return digit1 >= digit2;
             }
-            return true; // if both numbers are equal
         }
+        return true; // if both numbers are equal
     }
 
     /**
@@ -129,9 +128,7 @@ class StringOperations {
                 tempDividend = StringOperations.minus(tempDividend, divisor);
                 quotient++;
             }
-
             result += quotient;
-
         }
 
         return result.replace(/^0+(?=\d)/, '') || '0';
@@ -158,5 +155,10 @@ String.prototype.divide = function (str) {
 String.prototype.multiply = function (str) {
     return StringOperations.multiply(this.toString(), str)
 }
+
+String.prototype.compare = function (str) {
+    return StringOperations.compare(this.toString(), str)
+}
+
 
 module.exports = StringOperations;
