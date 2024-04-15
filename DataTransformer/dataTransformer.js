@@ -1,6 +1,6 @@
-const dataTransformer = {
-    addValues: (a, b) => {
+class dataTransformer {
 
+    static addValues(a, b) {
         if (typeof a === 'string' && typeof b === 'string') {
             return a.concat(b)
         }
@@ -12,33 +12,33 @@ const dataTransformer = {
         }
 
         throw new Error('Not supported types');
+    }
 
-
-    },
-    stringifyValue: (value) => {
+    static stringifyValue(value) {
         if (typeof value === 'object' || Array.isArray(value)) {
             return JSON.stringify(value);
         } else {
             return String(value);
         }
-    },
+    }
 
-    invertBoolean: (bool) => {
+    static invertBoolean(bool) {
+
         if (typeof bool !== 'boolean') {
             throw new Error('Inversion is only possible for booleans.');
         }
         return !bool;
-    },
+    }
 
-    convertToNumber: (value) => {
+    static convertToNumber(value) {
         const num = Number(value);
         if (isNaN(num)) {
             throw new Error('Conversion to number is not possible.');
         }
         return num;
-    },
+    }
 
-    coerceToType: (value, type) => {
+    static coerceToType(value, type) {
         switch (type) {
             case 'string':
                 return this.stringifyValue(value);
@@ -61,7 +61,6 @@ const dataTransformer = {
                 throw new Error('Unsupported type.');
         }
     }
-
-};
+}
 
 module.exports = dataTransformer;
