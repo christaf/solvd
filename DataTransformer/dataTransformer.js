@@ -41,13 +41,9 @@ const dataTransformer = {
     coerceToType: (value, type) => {
         switch (type) {
             case 'string':
-                return String(value);
+                return this.stringifyValue(value);
             case 'number':
-                const num = Number(value);
-                if (isNaN(num)) {
-                    throw new Error('Cannot coerce value to number.');
-                }
-                return num;
+                return this.convertToNumber(value);
             case 'boolean':
                 if (typeof value === 'boolean') {
                     return value;
@@ -57,6 +53,8 @@ const dataTransformer = {
                     } else if (value.toLowerCase() === 'false') {
                         return false;
                     }
+                } else if (typeof value === 'number') {
+                    return value > 0;
                 }
                 throw new Error('Cannot coerce value to boolean.');
             default:
