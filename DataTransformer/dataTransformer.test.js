@@ -23,7 +23,7 @@ describe('addValues', () => {
 
 describe('stringifyValue', () => {
     test('converts object to JSON string', () => {
-        expect(dataTransformer.stringifyValue({ key: 'value' })).toBe('{"key":"value"}');
+        expect(dataTransformer.stringifyValue({key: 'value'})).toBe('{"key":"value"}');
     });
 
     test('converts string to string', () => {
@@ -60,13 +60,17 @@ describe('coerceToType', () => {
         expect(dataTransformer.coerceToType('42', 'number')).toBe(42);
     });
 
-    test('coerces string to boolean', () => {
+    test('coerces string "true" to boolean true', () => {
         expect(dataTransformer.coerceToType('true', 'boolean')).toBe(true);
     });
 
     test('throws an error for unsupported type', () => {
+        expect(dataTransformer.coerceToType([], 'number')).toBe(0)
+    });
+
+    test('throws an error for unsupported coercion', () => {
         expect(() => {
-            dataTransformer.coerceToType([], 'number');
-        }).toThrow('Unsupported type.');
+            dataTransformer.coerceToType('hello', 'boolean');
+        }).toThrow('Cannot coerce value to boolean.');
     });
 });

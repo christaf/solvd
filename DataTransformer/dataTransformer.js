@@ -39,65 +39,29 @@ const dataTransformer = {
     },
 
     coerceToType: (value, type) => {
-
-        switch (typeof value) {
+        switch (type) {
             case 'string':
-                switch (type) {
-                    case 'number':
-                        return Number(value);
-                    case 'boolean':
-                        return value === 'true';
-                    case 'string':
-                        return value;
-                    default:
-                        throw new Error('Unsupported type.');
-
-                }
+                return String(value);
             case 'number':
-                switch (type) {
-                    case 'number':
-                        return value;
-                    case 'boolean':
-                        return value !== 0;
-                    case 'string':
-                        return String(value);
-                    default:
-                        throw new Error('Unsupported type.');
+                const num = Number(value);
+                if (isNaN(num)) {
+                    throw new Error('Cannot coerce value to number.');
                 }
+                return num;
             case 'boolean':
-                switch (type) {
-                    case 'number':
-                        return value ? 1 : 0;
-                    case 'boolean':
-                        return value;
-                    case 'string':
-                        return String(value);
-                    default:
-                        throw new Error('Unsupported type.');
+                if (typeof value === 'boolean') {
+                    return value;
+                } else if (typeof value === 'string') {
+                    if (value.toLowerCase() === 'true') {
+                        return true;
+                    } else if (value.toLowerCase() === 'false') {
+                        return false;
+                    }
                 }
-            case 'object':
-
-                switch (type) {
-                    case 'string':
-                        return JSON.stringify(value);
-                    default:
-                        throw new Error('Unsupported type.');
-                }
-
-            case 'undefined':
+                throw new Error('Cannot coerce value to boolean.');
+            default:
                 throw new Error('Unsupported type.');
-
-            case 'null':
-                throw new Error('Unsupported type.');
-            case 'Array':
-                switch (type) {
-                    case 'string':
-                        return JSON.stringify(value);
-                    default:
-                        throw new Error('Unsupported type.');
-                }
         }
-
     }
 
 };
