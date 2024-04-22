@@ -42,14 +42,29 @@ const calculateAvgArray = students => students.map(student => getAvgGrade(studen
 
 const calculateAvg = averages => averages.reduce((acc, grade) => acc + grade, 0) / averages.length
 
-// const getAverage = compose(calculateAvgArray, calculateAvg)
+const getAverage = compose(calculateAvg, calculateAvgArray)
+/*
 
+class Student {
+    name;
+    grades = [];
 
-const students = [
+    constructor(name, grades) {
+        this.name = name
+        this.grades = grades
+    }
+}
+
+const students = []
+students.push(new Student("ela", [70, 80, 90]))
+students.push(new Student("martin", [90, 90, 90]))
+*/
+const students2 = [
     {name: "Alice", grades: [80, 85, 90]},
     {name: "Bob", grades: [75, 85, 95]},
     {name: "Charlie", grades: [70, 80, 90]}
 ];
 
-const averageGrade = calculateAvg(calculateAvgArray(students))// getAverage(students);
+const averageGrade = getAverage(students2);
+//const averageGrade2 = calculateAvg(calculateAvgArray(students))
 console.log(averageGrade);
