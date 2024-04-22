@@ -14,19 +14,21 @@ class Person {
         return `${this.firstName} ${this.lastName}`;
     }
 }
+
 const getFullName = person => `${person.firstName} ${person.lastName}`;
 
 console.log(getFullName(new Person("adam", "grey")))
 
 
 //part2
-const filterUniqueWords = text =>
-    text
-        .toLowerCase()
-        .split(/\W+/)
-        .filter(word => word.length > 0)
-        .filter((word, index, array) => array.indexOf(word) === index) //we don't take words which already exist in the list
-        .sort();
+
+const compose = (...fns) => x => fns.reduceRight((v, f) => f(v), x);
+const toLowerCaseAndSplit = text => text.toLowerCase().split(/\W+/);
+const filterUnique = words => words.filter((word, index, array) => array.indexOf(word) === index);
+
+const sortWords = words => words.sort();
+
+const filterUniqueWords = compose(sortWords, filterUnique, toLowerCaseAndSplit);
 
 //generated text
 const text = "This is a sample text with some repeated words like sample and text";
@@ -34,17 +36,20 @@ const uniqueWords = filterUniqueWords(text);
 console.log(uniqueWords);
 
 
-const getAverageGrade = students =>
-    students
-        .map(student => student.grades.reduce((acc, grade) => acc + grade, 0) / student.grades.length)
-        .reduce((acc, avg, index, array) => acc + avg / array.length, 0);
+const getAvgGrade = student => student.grades.reduce((acc, grade) => acc + grade, 0) / student.grades.length
+
+const calculateAvgArray = students => students.map(student => getAvgGrade(student))
+
+const calculateAvg = averages => averages.reduce((acc, grade) => acc + grade, 0) / averages.length
+
+// const getAverage = compose(calculateAvgArray, calculateAvg)
 
 
 const students = [
-    { name: "Alice", grades: [80, 85, 90] },
-    { name: "Bob", grades: [75, 85, 95] },
-    { name: "Charlie", grades: [70, 80, 90] }
+    {name: "Alice", grades: [80, 85, 90]},
+    {name: "Bob", grades: [75, 85, 95]},
+    {name: "Charlie", grades: [70, 80, 90]}
 ];
 
-const averageGrade = getAverageGrade(students);
+const averageGrade = calculateAvg(calculateAvgArray(students))// getAverage(students);
 console.log(averageGrade);
