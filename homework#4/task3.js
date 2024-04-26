@@ -37,15 +37,17 @@ console.log(bankAccount.formattedBalance); //$2000
 // Ensure that the balance and formattedBalance properties of both accounts are updated correctly.
 
 
-bankAccount.transfer = function (targetAccount, amount) {
-    if (this.balance >= amount) {
-        this.balance -= amount;
+const transfer = function (currentAccount, targetAccount, amount) {
+    if (currentAccount.balance >= amount) {
+        currentAccount.balance -= amount;
         targetAccount.balance += amount;
     } else {
         console.log('Insufficient funds');
     }
 }
 
-bankAccount.transfer(bankAccount2, 500);
+transfer(bankAccount, bankAccount2, 500);
 console.log(bankAccount.formattedBalance); //$1500
 console.log(bankAccount2.formattedBalance); //$500
+
+module.exports = {transfer, bankAccount, bankAccount2}

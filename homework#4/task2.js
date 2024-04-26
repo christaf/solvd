@@ -5,18 +5,23 @@ let product = {
 }
 //Use property descriptors to make the price and quantity properties non-enumerable and non-writable.
 
-Object.defineProperties(product, {
-    'price': {value: product.price,
-        writable: false,
-        enumerable: false
+const addProperties = () => {
+    Object.defineProperties(product, {
+        'price': {value: product.price,
+            writable: false,
+            enumerable: false
+    
+        },
+        'quantity': {
+            value: product.quantity,
+            writable: false,
+            enumerable: false
+        }
+    })
+    
+}
 
-    },
-    'quantity': {
-        value: product.quantity,
-        writable: false,
-        enumerable: false
-    }
-})
+addProperties()
 
 //Implement a function called getTotalPrice that takes the product object as an argument
 // and returns the total price (calculated as price * quantity). Ensure that the function
@@ -51,3 +56,5 @@ try{
 } catch (e) {
     console.log(e.message);
 }
+
+module.exports = {deleteNonConfigurable, getTotalPrice, product, addProperties}

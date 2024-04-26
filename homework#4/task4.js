@@ -30,3 +30,5 @@ const person = {
 
 let immutablePerson = createImmutableObject(person);
 console.log(Object.getOwnPropertyDescriptors(immutablePerson));
+
+module.exports = {createImmutableObject, person, immutablePerson}

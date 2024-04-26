@@ -39,3 +39,5 @@ function observeObject(obj, callback) {
 }
 observedPerson.fullName = 'Mateusz Krzysiek';
 observedPerson.fullName;
+
+module.exports = {observeObject, person, observedPerson}
