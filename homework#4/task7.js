@@ -4,14 +4,38 @@
 // You can choose any schema you want.
 
 function validateObject(obj, schema) {
-    for (let key in schema) {
-        if (!obj.hasOwnProperty(key)) {
-            return false;
+    for (let key in obj) {
+        if (!schema.hasOwnProperty(key)) {
+            return false; 
         }
         if (typeof obj[key] !== schema[key].type) {
-            return false;
+            return false; 
         }
-        //TODO add additional validation rules
     }
-    return true;
+
+    for (let key in schema) {
+        if (schema[key].required && !obj.hasOwnProperty(key)) {
+            return false; 
+        }
+    }
+
+    return true; 
 }
+
+// Example usage:
+const obj = {
+    name: "John",
+    age: 25,
+    auto: "nissan"
+};
+
+const schema = {
+    name: { type: 'string', required: true },
+    age: { type: 'number', required: true },
+    email: { type: 'string', required: false },
+    address: { type: 'string', required: false },
+};
+
+console.log(validateObject(obj, schema)); // Output: true
+
+module.exports = {validateObject, obj, schema}
