@@ -75,9 +75,6 @@ console.log(keys);
 
 
 person.address = {city: 'New York', street: 'Broadway'}
-
 person.updateInfo({address: {city: 'New York', street: 'Broadway'}})
-
 console.log(Object.getOwnPropertyDescriptors(person))
-
 console.log(person)
