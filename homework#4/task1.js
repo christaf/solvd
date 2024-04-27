@@ -17,65 +17,50 @@ function makePropertiesReadOnly(obj) {
 
 }
 
-person.toggleProperty = function (key) {
-    if (Object.getOwnPropertyDescriptor(person, key).writable) {
-        Object.defineProperty(person, key, {
-            writable: false
-        });
-    } else {
-        Object.defineProperty(person, key, {
-            writable: true
-        });
-    }
-}
-
 
 //part 2
 
 person.updateInfo = function (newInfo) {
-    Object.keys(newInfo).forEach(function (key) {
-        if (typeof newInfo[key] === 'object' && newInfo[key] !== null) {
-            person[key].updateInfo(newInfo[key]);
-        }else if (Object.getOwnPropertyDescriptor(person, key).writable) {
+
+    for (let key in newInfo) {
+        if (Object.getOwnPropertyDescriptor(person, key).writable) {
             person[key] = newInfo[key];
         } else {
-            person.toggleProperty(key);
-            person[key] = newInfo[key];
-            person.toggleProperty(key);
+            throw new Error(`Property '${key}' is read-only.`);
         }
-    });
-
+    }
 };
 
 makePropertiesReadOnly(person);
 
 console.log(person);
-person.age = 40;
+// person.age = 40; // Should throw an error
 console.log(person);
 
-person.updateInfo({age: 50});
-
-//part 3
-
-//I am not sure if it's a correct way
-const addAddress = () => {
-    Object.defineProperty(person, 'address', {
-        value: {},
-        enumerable: false,
-        configurable: false
-    });
+try {
+    person.updateInfo({age: 50});
+} catch (error) {
+    console.error(error.message);
 }
 
-addAddress()
+Object.defineProperty(person, 'address', {
+    value: {},
+    writable: true,
+    enumerable: false,
+    configurable: false
+});
 
+person.address = { city: 'New York', street: 'Broadway' };
+try {
+    person.updateInfo({ address: { city: 'New York', street: 'Broadway' } });
+} catch {
+    console.error(error.message)
+}
 
-let keys = Object.getOwnPropertyDescriptors(person)
-console.log(keys);
+console.log(person);
 
+for (let key in Object.getOwnPropertyDescriptors(person)){
+    console.log(key);
+}
 
-person.address = {city: 'New York', street: 'Broadway'}
-person.updateInfo({address: {city: 'New York', street: 'Broadway'}})
-console.log(Object.getOwnPropertyDescriptors(person))
-console.log(person)
-
-module.exports = {updateInfo, makePropertiesReadOnly, person, toggleProperty, addAddress}
+module.exports = {makePropertiesReadOnly, person}
