@@ -9,16 +9,16 @@ const solution4 = require('./task4.js');
 
 class solution5 {
     static measureArrayPerformance(func, arr) {
-        const start = new Date().getTime();
+        const start = performance.now()
         func(arr);
-        const end = new Date().getTime();
+        const end = performance.now()
         return end - start;
     }
 
     static measureArrayPerformanceOfTwoArrays(func, arr1, arr2) {
-        const start = new Date().getTime();
+        const start = performance.now()
         func(arr1, arr2);
-        const end = new Date().getTime();
+        const end = performance.now()
         return end - start;
     }
 

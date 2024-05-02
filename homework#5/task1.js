@@ -7,7 +7,9 @@
 class solution1 {
     static customFilterUnique(arr, callback) {
         return arr.filter((item, index) => {
-            return arr.findIndex((item2) => callback(item, item2)) === index;
+            let firstOccIndex = arr.findIndex((item2) => callback(item, item2)) 
+            let lastOccIndex = arr.findLastIndex((item2) => callback(item, item2))
+            return firstOccIndex === lastOccIndex;
         });
     }
 
@@ -31,7 +33,7 @@ class solution1 {
 
 const arr = [
     { id: 1, name: 'John' },
-    { id: 2, name: 'Jane' },
+    { id: 2, name: 'Adam' },
     { id: 3, name: 'John' },
     { id: 4, name: 'Jane' },
     { id: 5, name: 'John' },
@@ -39,11 +41,11 @@ const arr = [
 ];
 
 const uniqueArr = solution1.filterSameName(arr);
-console.log(uniqueArr); // [{ id: 1, name: 'John' }, { id: 2, name: 'Jane' }]
+console.log(uniqueArr); // [{ id: 2, name: 'Adam' }]
 
 
-const arr2 = [1, 5, 2, 6, 3, 4, 1, 2, 3, 4, 5, 6]
+const arr2 = [1, 5, 2, 6, 3, 4, 1, 3, 4, 5, 6]
 const uniqueArr2 = solution1.filterMod5(arr2);
-console.log(uniqueArr2); // [1, 5, 2, 3, 4]
+console.log(uniqueArr2); // [2]
 
 module.exports = solution1;
