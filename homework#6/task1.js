@@ -59,4 +59,5 @@ const language = "fr";
 const localizedGreeting = solution.localize(language, `${keyWord}`);
 console.log(localizedGreeting); // Expected: "Bonjour" (for language "fr")
 
+module.exports = solution;
 //I extended it a bit just to make this exercise just a bit more reasonable to me.
