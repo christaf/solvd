@@ -1,16 +1,16 @@
 //Usage Demonstration: Create instances of your data structures and demonstrate their usage with sample data. Show how the algorithms you implemented can solve practical problems using these data structures.
 
-const { Graph, Queue, BinaryTree, LinkedList, Stack } = require('./part1.js');
+const { Graph, Queue, BinaryTree, TreeNode, LinkedList, Stack } = require('./part1.js');
 const { MinMaxStack, hasCycle, dijkstraNonWeighted, isBST } = require('./part2.js');
 
 const linkedListExample = () => {
     //create a new linked list
     let linkedList = new LinkedList();
-    linkedList.append(1);
-    linkedList.append(2);
-    linkedList.append(3);
-    linkedList.append(4);
-    linkedList.append(5);
+    linkedList.insert(1);
+    linkedList.insert(2);
+    linkedList.insert(3);
+    linkedList.insert(4);
+    linkedList.insert(5);
 
     //search for a node with value 3
     console.log(linkedList.search(3)); //output: Node { value: 3, next: Node { value: 4, next: Node { value: 5, next: null } } }
@@ -23,43 +23,48 @@ const linkedListExample = () => {
 const binaryTreeExample = () => {
 
 
-    //create a new binary tree
-    let binaryTree = new BinaryTree(1);
-    binaryTree.insert(2);
-    binaryTree.insert(3);
-    binaryTree.insert(4);
-    binaryTree.insert(5);
+    // Create a new binary tree
+    let binaryTree = new BinaryTree();
+    binaryTree.insert(1);
 
-    let binaryTree2 = new BinaryTree(2);
+    // Manually create a situation where the tree is not a BST
+    binaryTree.root.left = new TreeNode(2);
+    binaryTree.root.left.right = new TreeNode(1);
+    binaryTree.root.right = new TreeNode(0);
+
+
+    let binaryTree2 = new BinaryTree();
     binaryTree2.insert(1);
     binaryTree2.insert(3);
 
+    console.log(binaryTree2);
+
     //check if the binary tree is a binary search tree
-    console.log(isBST(binaryTree)); //output: false
-    console.log(isBST(binaryTree2)); //output: true
+    console.log(isBST(binaryTree.root)); //output: false
+    console.log(isBST(binaryTree2.root)); //output: true
 }
 
 const graphExample = () => {
 
     //create a new graph
-    let graph = new Graph();
-    graph.addVertex(1);
-    graph.addVertex(2);
-    graph.addVertex(3);
-    graph.addVertex(4);
-    graph.addVertex(5);
+    const graph = new Graph();
+    graph.addVertex('A');
+    graph.addVertex('B');
+    graph.addVertex('C');
+    graph.addVertex('D');
+    graph.addEdge('A', 'B');
+    graph.addEdge('A', 'C');
+    graph.addEdge('B', 'D');
+    graph.addEdge('C', 'D');
 
-    graph.addEdge(1, 2);
-    graph.addEdge(1, 3);
-    graph.addEdge(2, 4);
-    graph.addEdge(3, 5);
+    console.log(graph.depthFirstSearch('A')); // [ 'A', 'B', 'D', 'C' ]
+    console.log(graph.breadthFirstSearch('A')); // [ 'A', 'B', 'C', 'D' ]
 
-
-    //find the shortest path using Dijkstra's algorithm
-    console.log(dijkstraNonWeighted(graph, 1)); //output: { '1': 0, '2': 1, '3': 1, '4': 2, '5': 2 }
+    const distances = dijkstraNonWeighted(graph, 'A');
+    console.log(distances); // { A: 0, B: 1, C: 1, D: 2 }
 }
 
-cycleExample = () => {
+const cycleExample = () => {
     //create a linked list with a cycle
     let head = new LinkedList();
     let node1 = new LinkedList();
@@ -123,5 +128,13 @@ const queueExample = () => {
     console.log(queue.dequeue()); //output: 5
     console.log(queue.isEmpty()); //output: true
 }
+
+// linkedListExample();
+// binaryTreeExample();
+// graphExample();
+// cycleExample();
+// minMaxStackExample();
+// queueExample();
+
 
 module.exports = { linkedListExample, binaryTreeExample, graphExample, cycleExample, minMaxStackExample, queueExample };

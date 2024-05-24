@@ -19,6 +19,11 @@ class Stack {
     peek() {
         return this.stack[this.stack.length - 1];
     }
+
+    //isEmpty method checks if the stack is empty
+    isEmpty() {
+        return this.stack.length === 0;
+    }
 }
 
 //Queue: Implement a class for a queue data structure. Include methods for enqueue, dequeue, and peek.
@@ -34,12 +39,20 @@ class Queue {
 
     //dequeue method removes the first value from the queue
     dequeue() {
+        if (this.isEmpty()) {
+            throw new Error("Queue is empty.");
+        }
         return this.queue.shift();
     }
 
     //peek method returns the first value in the queue
     peek() {
         return this.queue[0];
+    }
+
+    //isEmpty method checks if the queue is empty
+    isEmpty() {
+        return this.queue.length === 0;
     }
 }
 
@@ -149,6 +162,9 @@ class Graph {
 
     //addEdge method adds an edge between two vertices
     addEdge(vertex1, vertex2) {
+        if (!this.vertices[vertex1] || !this.vertices[vertex2]) {
+            throw new Error("Both vertices must exist in the graph.");
+        }
         this.vertices[vertex1].push(vertex2);
         this.vertices[vertex2].push(vertex1);
     }
@@ -182,15 +198,15 @@ class Graph {
 
         //create a queue to keep track of vertices to visit, usage of the Queue class defined above!
         const queue = new Queue();
-    
+
         // mark the starting vertex as visited
         visited[startingVertex] = true;
         queue.enqueue(startingVertex);
-    
+
         while (!queue.isEmpty()) {
             const currentVertex = queue.dequeue();
             result.push(currentVertex);
-    
+
             this.vertices[currentVertex].forEach((neighbor) => {
                 if (!visited[neighbor]) {
                     visited[neighbor] = true;
@@ -198,7 +214,7 @@ class Graph {
                 }
             });
         }
-    
+
         return result;
     }
 }
@@ -279,5 +295,6 @@ module.exports = {
     Queue,
     BinaryTree,
     Graph,
-    LinkedList
+    LinkedList,
+    TreeNode
 };

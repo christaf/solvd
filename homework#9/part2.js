@@ -1,5 +1,5 @@
 //Min/Max Stack: Implement a class for a stack that supports finding the minimum and maximum elements in constant time (O(1)). Include methods for push, pop, getMin, and getMax.
-const {Stack} = require ('./part1.js');
+const { Stack } = require('./part1.js');
 
 class MinMaxStack {
     constructor() {
@@ -30,12 +30,20 @@ class MinMaxStack {
         return this.stack.pop();
     }
 
+    peek() {
+        return this.stack.peek();
+    }
+
     getMin() {
         return this.minMaxStack.peek().min;
     }
 
     getMax() {
         return this.minMaxStack.peek().max;
+    }
+
+    isEmpty() {
+        return this.stack.isEmpty();
     }
 }
 
@@ -79,19 +87,18 @@ function dijkstraNonWeighted(graph, start) {
     while (!queue.isEmpty()) {
         const current = queue.dequeue();
 
-        graph.edges[current].forEach((neighbor) => {
+        graph.vertices[current].forEach((neighbor) => {
             if (distances[neighbor] === undefined) {
-                //if the neighbor has not been visited, set the distance and add to the queue
-                distances[neighbor] = distances[current] + 1; //increment the distance by 1, since it's non-weighted
+                distances[neighbor] = distances[current] + 1;
                 queue.enqueue(neighbor);
+            } else {
+                distances[neighbor] = Math.min(distances[neighbor], distances[current] + 1); //update the distance if a shorter path is found
             }
         });
     }
 
     return distances;
 }
-
-
 //Linked List Cycle: Implement a function to detect if a linked list has a cycle. Use Floyd's Cycle Detection Algorithm (Tortoise and Hare algorithm) to solve this problem efficiently.
 
 function hasCycle(head) {
@@ -114,4 +121,4 @@ function hasCycle(head) {
     return false;
 }
 
-module.exports = { MinMaxStack, isBST, dijkstraNonWeighted, hasCycle};
+module.exports = { MinMaxStack, isBST, dijkstraNonWeighted, hasCycle };
